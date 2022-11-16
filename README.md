@@ -8,7 +8,7 @@ Please checkout https://github.com/tommy-iasia/threejs-first for your developmen
 
 ## 221116 Wave
 
-Sample: https://tommy-iasia.github.io/threejs-first-samples/221116%20wave/index.html
+Sample: https://tommy-iasia.github.io/threejs-first-samples/221116%20wave/index.html  
 Explanation: https://github.com/tommy-iasia/threejs-first-samples/tree/main/221116%20wave
 
 Garb a first impression of physics implementation in code.
