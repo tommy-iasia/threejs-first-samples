@@ -29,7 +29,7 @@ for (let i = 0; i < 31; i++) {
 
 ## Interaction
 
-Raycaster is used with `mousemove` event.
+`Raycaster` is used with `mousemove` event.
 
 ```ts
 let hovered: Box | undefined = undefined;
