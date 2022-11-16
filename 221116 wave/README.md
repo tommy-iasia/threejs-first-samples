@@ -59,10 +59,10 @@ if (box === hovered) {
 
 Since ThreeJS is just a rendering library. It doesn't have any Physics in its mind.
 
-We need create our own **velocity** attribute by ourselves. For example, we create a velocity **number**.
+We need to create our own **velocity** attribute. Here, we create a velocity **number**.
 Positive number represents that the box is moving upward in y-axis. Negative number means downward.
 
-We apply our velocity to ThreeJS's mesh's position in every tick for every box.
+Then, we apply our velocity to ThreeJS's mesh's position on every box in every tick.
 
 ```ts
 for (const box of boxes) {
@@ -82,24 +82,34 @@ When boxes are separated by a distance, the force will pull them back together. 
 In addition, the force should only be applied locally. The force is stronger when two boxes are neighbor, but is weaker when boxes are just neighbours of neighbours.
 
 ```ts
-const neighborBox = row[neighborJ];
+for (const box of boxes) {
+  tickers.push((deltaTime) => {    
+    for (let i = -3; i <= 3; i++) {
+      for (let j = -3; j <= 3; j++) {
+        if (!(i === 0 && j === 0)) {
+          //...
+      
+          const difference =
+            box.visibleMesh.position.y -
+            neighborBox.visibleMesh.position.y;
 
-const difference =
-  box.visibleMesh.position.y -
-  neighborBox.visibleMesh.position.y;
+          const distance = Math.sqrt(i * i + j * j);
 
-const distance = Math.sqrt(i * i + j * j);
-
-neighborBox.velocity +=
-  ((20 * difference) / (distance * distance)) *
-  Math.min(deltaTime, 1);
+          neighborBox.velocity +=
+            ((20 * difference) / (distance * distance)) *
+            Math.min(deltaTime, 1);
+        }
+      }
+    }
+  });
+}
 ```
 
 Poisition generates force; force generates velocity; veloctiy generates position again. As a result, we have created a cycle among position, velocity and force. And this cycle will appear as wave.
 
 ## Damping
 
-Lastly, we give some damping preventing user from brusting the system when they move the mouse vigorously.
+Lastly, we give some damping preventing user from brusting the system if the user moves his mouse vigorously.
 
 ```ts
 box.velocity *= 0.98;
