@@ -62,7 +62,7 @@ Since ThreeJS is just a rendering library. It doesn't have any Physics in its mi
 We need create our own **velocity** attribute by ourselves. For example, we create a velocity **number**.
 Positive number represents that the box is moving upward in y-axis. Negative number means downward.
 
-We apply the velocity to position in every tick for every box.
+We apply our velocity to ThreeJS's mesh's position in every tick for every box.
 
 ```ts
 for (const box of boxes) {
@@ -79,7 +79,7 @@ for (const box of boxes) {
 In order to make wave, the sea must be elastic. In other word, boxes are connected to each other by some spring-like force.
 When boxes are separated by a distance, the force will pull them back together. The farer they are separated, the stronger the force is.
 
-In addition, the force should only apply locally. Therefore, the force is stronger when two boxes are neighbor, but is weaker when boxes are just neighbours of neighhours.
+In addition, the force should only be applied locally. The force is stronger when two boxes are neighbor, but is weaker when boxes are just neighbours of neighbours.
 
 ```ts
 const neighborBox = row[neighborJ];
@@ -95,11 +95,11 @@ neighborBox.velocity +=
   Math.min(deltaTime, 1);
 ```
 
-Therefore, we turn distance into a negative force on velocity. Then, veloctiy affects position. Eventually, we have a cycle among distance, velocity and force. And this system is expressed as wave.
+Poisition generates force; force generates velocity; veloctiy generates position again. As a result, we have created a cycle among position, velocity and force. And this cycle will appear as wave.
 
 ## Damping
 
-Lastly, we give some damping preventing user from brusting the system.
+Lastly, we give some damping preventing user from brusting the system when they move the mouse vigorously.
 
 ```ts
 box.velocity *= 0.98;
